@@ -11,6 +11,12 @@ http://microsite.omniture.com/t2/help/en_US/beta/ios/index.html#
 For a full migration guide to convert to version 3.0 please visit:
 http://microsite.omniture.com/t2/help/en_US/beta/ios/index.html#Migration_Guide
 
+3.1.2
+
+- Added ability to set lifecycleSessionTimeouts (used for calculating session lengths).  Defaults to 300 seconds.
+- Added FB referrer tracking to default install hit.
+- Fixed potential exception in media measurement if trackVars or trackEvents was set to nil.
+
 3.1.1
 
 - Fixed an issue where regular measurement events were not coming through in media measurement hits.

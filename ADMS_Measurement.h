@@ -273,6 +273,8 @@ typedef enum {
 
 @property(nonatomic, retain) NSMutableDictionary *persistentContextData;	///< Persistent context data to include with every hit.
 
+@property(nonatomic) NSTimeInterval lifecycleSessionTimeout;
+
 /**
  *	@brief Comma-delimited list of variables to send with a trackLink or trackEvent call
  *
