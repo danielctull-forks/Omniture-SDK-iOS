@@ -62,8 +62,8 @@ typedef enum {
  *	@param length length of media (in seconds).
  *	@param playerName name of media player.
  */
-- (void)open:(NSString *)name 
-      length:(double)length 
+- (void)open:(NSString *)name
+      length:(double)length
   playerName:(NSString *)playerName;
 
 /**
@@ -74,10 +74,28 @@ typedef enum {
  *	@param playerName name of media player.
  *	@param playerID ID of media player.
  */
-- (void)open:(NSString *)name 
-      length:(double)length 
-  playerName:(NSString *)playerName 
+- (void)open:(NSString *)name
+      length:(double)length
+  playerName:(NSString *)playerName
     playerID:(NSString *)playerID;
+
+/**
+ *	@brief Notifies the media module what ad is about to be opened
+ *
+ *	@param name name of media ad item.
+ *	@param length length of media ad (in seconds).
+ *	@param playerName name of media player.
+ *	@param parentName name of the media item that the media ad is playing in.
+ *	@param parentPod pod of the media item that the media ad is playing in.
+ *	@param parentPodPosition point in the media item where the media ad began playing (in seconds).
+ */
+-       (void)openAd:(NSString *)name
+              length:(double)length
+          playerName:(NSString *)playerName
+          parentName:(NSString *)parentName
+           parentPod:(NSString *)parentPod
+   parentPodPosition:(double)parentPodPosition
+               CPM:(NSString *)CPM;
 
 /**
  *	@brief Notifies the media module that the media item has closed
@@ -92,8 +110,17 @@ typedef enum {
  *	@param name name of media item.
  *	@param offset point that the media items is being played from (in seconds)
  */
-- (void)play:(NSString *)name 
+- (void)play:(NSString *)name
       offset:(double)offset;
+
+/**
+ *	@brief Notifies the media module that the media item has been clicked
+ *
+ *	@param name name of media item.
+ *	@param offset point that the media item was clicked (in seconds)
+ */
+- (void)click:(NSString *)name
+       offset:(double)offset;
 
 /**
  *	@brief Notifies the media module that the media item has completed
@@ -121,21 +148,27 @@ typedef enum {
 - (void)track:(NSString *)name;
 
 #pragma mark - Properties
-@property(readwrite, copy) NSString * trackVars;				///< Comma-delimited list of variables
-@property(readwrite, copy) NSString * trackEvents;				///< Comma-delimited list of events
-@property(readwrite, copy) NSString * channel;                  ///< Channel
+@property(readwrite, copy) NSString * trackVars;                ///< Comma-delimited list of variables
+@property(readwrite, copy) NSString * trackEvents;              ///< Comma-delimited list of events
+// All video
+@property(readwrite, copy) NSString * channel;                              ///< Channel
+@property(readwrite) double completeCloseOffsetThreshold;                   ///< Number of second before the end of the media that it should be considered complete - Default is 1
+@property(readwrite, retain) NSMutableDictionary * contextDataMapping;      ///< Defines variable mapping to eVars and Events
+@property(readwrite, assign) id<ADMS_MediaMeasurementDelegate> delegate;    ///< Delegate
+
+// Primary content
 @property(readwrite) int trackSeconds;                          ///< Interval for sending tracking data - Default is 0
-
-@property(readwrite) double completeCloseOffsetThreshold;       ///< Number of second before the end of the media that it should be considered complete - Default is 1
-
 @property(readwrite, copy) NSString * trackMilestones;          ///< Comma-delimited list of intervals (as a percentage) for sending tracking data
 @property(readwrite) BOOL segmentByMilestones;                  ///< Automatically generates segment info based on trackMilestones - Default is NO
 @property(readwrite, copy) NSString * trackOffsetMilestones;	///< Comma-delimited list of intervals (in seconds) for sending tracking data
 @property(readwrite) BOOL segmentByOffsetMilestones;            ///< Automatically generates segment info based on trackOffsetMilestones - Default is NO
 
-@property(readwrite, retain) NSMutableDictionary * contextDataMapping;      ///< Defines variable mapping to eVars and Events
-
-@property(readwrite, assign) id<ADMS_MediaMeasurementDelegate> delegate;    ///< Delegate
+// Ad content
+@property(readwrite) int adTrackSeconds;                        ///< Interval for sending ad tracking data - Default is 0
+@property(readwrite, copy) NSString * adTrackMilestones;        ///< Comma-delimited list of intervals (as a percentage) for sending ad tracking data
+@property(readwrite) BOOL adSegmentByMilestones;                ///< Automatically generates segment info based on adTrackMilestones - Default is NO
+@property(readwrite, copy) NSString * adTrackOffsetMilestones;  ///< Comma-delimited list of intervals (in seconds) for sending ad tracking data
+@property(readwrite) BOOL adSegmentByOffsetMilestones;          ///< Automatically generates segment info based on adTrackOffsetMilestones - Default is NO
 
 @end
 
@@ -145,6 +178,8 @@ typedef enum {
 
 #pragma mark -Properties
 @property(readwrite, copy) NSString * name;             ///< Name of the media item
+@property(readwrite) BOOL ad;                           ///< Indicates if media is an ad
+@property(readwrite) BOOL clicked;                           ///< Indicates if media has been clicked
 @property(readwrite) double length;                     ///< Length of the media item in seconds
 @property(readwrite, copy) NSString * playerName;       ///< Name of the media player
 @property(readwrite, copy) NSString * mediaEvent;       ///< Name of the most recent media event

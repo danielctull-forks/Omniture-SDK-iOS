@@ -9,7 +9,9 @@
 typedef enum {
     ADMS_AutoTrackOptionsNone = 0, 			///< Disable all auto tracking
 	ADMS_AutoTrackOptionsLifecycle = 1,		///< Track application lifecycle
+#if TARGET_OS_IPHONE
     ADMS_AutoTrackOptionsNavigation = 2		///< Track navigation events
+#endif
 } ADMS_AutoTrackOptions; 					///< @enum Auto Tracking Options Enumeration
 
 /**
@@ -273,7 +275,7 @@ typedef enum {
 
 @property(nonatomic, retain) NSMutableDictionary *persistentContextData;	///< Persistent context data to include with every hit.
 
-@property(nonatomic) NSTimeInterval lifecycleSessionTimeout;
+@property(nonatomic) NSTimeInterval lifecycleSessionTimeout;        ///< set the total amount of time to ignore between sessions.
 
 /**
  *	@brief Comma-delimited list of variables to send with a trackLink or trackEvent call
@@ -307,8 +309,9 @@ typedef enum {
  *	@brief Amount of time to wait between sending hits that were queued in offline mode.
  *
  *	@note Default is 0.
+ *  @deprecated As of version 3.1.4, offlineThrottleDelay will not have any effect
  */
-@property(nonatomic) NSTimeInterval offlineThrottleDelay;
+@property(nonatomic) NSTimeInterval offlineThrottleDelay __deprecated;
 
 /**
  *	@brief Maximum number of hits to cache when in offline mode.

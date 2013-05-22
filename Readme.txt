@@ -2,19 +2,31 @@ Release Notes for iOS App Measurement Library:
 
 Included are notes from the latest major revision to current.
 
-For full release notes please visit:
-http://microsite.omniture.com/t2/help/en_US/whatsnew/index.html#AppMeasurement
-
 For full documentation please visit:
-http://microsite.omniture.com/t2/help/en_US/beta/ios/index.html#
+http://microsite.omniture.com/t2/help/en_US/sc/appmeasurement/ios/index.html
 
-For a full migration guide to convert to version 3.0 please visit:
-http://microsite.omniture.com/t2/help/en_US/beta/ios/index.html#Migration_Guide
+3.1.6 (18 Apr, 2013)
+
+- Fixed an issue that was causing previous session length to sometime be calculated incorrectly.
+
+3.1.5 (21 Mar, 2013)
+
+- ADMS_Measurement.visitorID now gets pre-populated with the default value
+
+3.1.4 (21 Feb, 2013)
+
+- "offlineThrottleDelay" has been deprecated.  The calls still exist to preserve
+  backwards compatibility but no longer have any effect
+
+3.1.3
+
+- Fixed a potential EXC_BAD_ACCESS issue when setting the Products variable manually.
+- Fixed a potential invalid selector crash when a mbox timed out.
+- Added ad tracking support to media measurement.
 
 3.1.2
 
-- Added ability to set lifecycleSessionTimeouts (used for calculating session lengths).  Defaults to 300 seconds.
-- Added FB referrer tracking to default install hit.
+- Added ability to set lifecycleSessionTimeouts (used for calculating session lengths).  Defaults to 5 minutes.
 - Fixed potential exception in media measurement if trackVars or trackEvents was set to nil.
 
 3.1.1
@@ -35,58 +47,4 @@ http://microsite.omniture.com/t2/help/en_US/beta/ios/index.html#Migration_Guide
 
 3.0.0
 
-Notes:
-- In order to use this library you must be a SiteCatalyst v15 customer.  We make use of Processing Rules heavily in this version of the library, so we also recommend your analysts are certified to use processing rules.
-
-Enhancements
-- Added "Auto-Tracking" functionality
-- Reduced library size to appx. 90k in final build.
-- Added "trackEvents" and "trackAppState" methods
-- Improved context data support and functionality.  
-	-(Recommend using context data for all information sent)
-- Simplified tracking so a basic tracking implementation can be done in 5 minutes.
-	
-Changes
-- AppMeasurement Class is now ADMS_Measurement
-- ADMS_Measurement now acts as a proper Singleton
-- Changed getters and setters for eVars, props, lists, hiers, pevs
-- All variables passed into "track" calls will only persist for that call.
-- Modified the following variables
-	- Previous:			- Current
-		- account			- reportSuiteIDs
-		- dc				- dataCenter
-		- pageName			- appState
-		- contextData			- persistentContextData
-		- state				- geoState
-		- zip				- geoZip
-		- server			- appSection
-		- debugTracking			- debugLogging
-		- trackOffline			- offlineTrackingEnabled
-		- offlineLimit			- offlineHitLimit
-		- OfflineThrottleDelay		- offlineThrottleDelay
-	
-- Repurposed the following variables:
-		- linkURL 			(sent with trackLinkURL:)
-		- linkName 			(sent with trackLinkURL:)
-		- linkType 			(sent with trackLinkURL:)
-		- lightProfileID 		(sent with trackLight:)
-		- lightStoreForSeconds 	(sent with trackLight:)
-		- lightIncrementBy 		(sent with trackLight:)	
-		- trackingServerSecure 	(trackingServer is used when ssl is on)
-	
-- Removed the following variables:
-		- timestamp
-		- userAgent
-		- dynamicVariablePrefix
-		- visitorNamespace
-		- pageURL
-		- pageType
-		- referrer
-		- linkLeaveQueryString
-		- usePlugins
-		- useBestPractices (handled by AutoTracking)
-		- delegate
-		- retrieveLightData	
-		- deleteLightProfiles
-		- retrieveLightProfiles
-		
+- Initial release of 3.0 libraries.

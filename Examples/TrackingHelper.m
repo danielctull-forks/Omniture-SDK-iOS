@@ -7,8 +7,8 @@
 #import "ADMS_Measurement.h"
 #import "ADMS_MediaMeasurement.h"
 
-#define TRACKING_RSID		@"YOUR_RSID_HERE"
-#define TRACKING_SERVER		@"YOUR_SERVER_HERE"
+NSString *const TRACKING_RSID =	@"YOUR_RSID_HERE";
+NSString *const TRACKING_SERVER = @"YOUR_SERVER_HERE";
 
 @implementation TrackingHelper
 
@@ -23,9 +23,9 @@
 	
 	
 	//(optional)Disable Autotracking Here
-	[measurement setAutoTrackingOptions:ADMS_AutoTrackOptionsLifecycle | ADMS_AutoTrackOptionsNavigation];	//LifeCycle and Navigation auto tracking enabled
-//	[measurement setAutoTrackingOptions:ADMS_AutoTrackOptionsLifecycle];                                    //only LifeCycle auto tracking enabled (default)
-//	[measurement setAutoTrackingOptions:ADMS_AutoTrackOptionsNavigation];                                   //only Navigation auto tracking enabled
+	[measurement setAutoTrackingOptions:ADMS_AutoTrackOptionsLifecycle];                                    //only LifeCycle auto tracking enabled (default)
+//	[measurement setAutoTrackingOptions:ADMS_AutoTrackOptionsLifecycle | ADMS_AutoTrackOptionsNavigation];	//LifeCycle and navigation tracking enabled (iOS only)
+//	[measurement setAutoTrackingOptions:ADMS_AutoTrackOptionsNavigation];                                   //only Navigation auto tracking enabled (iOS only)
 //	[measurement setAutoTrackingOptions:ADMS_AutoTrackOptionsNone];                                         //fully disable auto tracking
 	
 }
@@ -62,8 +62,8 @@
         @"a.media.complete":@"event7"
     } mutableCopy];
     
-    //Enable MPMoviePlayer Autotracking
-    [mediaMeasurement setAutoTrackingOptions:ADMS_MediaAutoTrackOptionsMPMoviePlayer];
+    //Enable MPMoviePlayer Autotracking (iOS only)
+//    [mediaMeasurement setAutoTrackingOptions:ADMS_MediaAutoTrackOptionsMPMoviePlayer];
     
     //Configure optional settings
     mediaMeasurement.trackMilestones = @"25,50,75";
